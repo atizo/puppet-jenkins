@@ -43,6 +43,12 @@ class jenkins(
       File['/etc/sysconfig/jenkins'],
     ],
   }
+  augeas{"set_jenkins_user_shell":
+    context => "/files/etc/passwd",
+    changes => "set jenkins/shell '/bin/bash'",
+    onlyif => "get jenkins/shell != '/bin/bash'",
+    require => Package['jenkins'],
+  }
   file{'/etc/sysconfig/jenkins':
     content => template('jenkins/sysconfig.erb'),
     require => Package['jenkins'],
