@@ -11,9 +11,4 @@ class jenkins::git {
     require => File["${jenkins::home}/.ssh"],
     creates => "${jenkins::home}/.ssh/id_rsa",
   }
-  file{"${jenkins::home}/.ssh/config":
-    content => 'StrictHostKeyChecking no',    
-    require => File["${jenkins::home}/.ssh"],
-    owner => jenkins, group => jenkins, mode => 0444;
-  }
 }
