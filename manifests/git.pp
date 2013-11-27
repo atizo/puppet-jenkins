@@ -12,7 +12,9 @@ class jenkins::git {
     creates => "${jenkins::home}/.ssh/id_rsa",
   }
   file{"${jenkins::home}/.ssh/config":
-    content => 'StrictHostKeyChecking no',
+    source => [
+      "puppet://$server/modules/site-jenkins/git/$fqdn/conf",
+    ],
     require => File["${jenkins::home}/.ssh"],
     owner => jenkins, group => jenkins, mode => 0444;
   }
